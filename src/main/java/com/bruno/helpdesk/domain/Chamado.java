@@ -56,7 +56,69 @@ public class Chamado implements Serializable {
 		this.tecnico = tecnico;
 		this.cliente = cliente;
 	}
+	
+	public Chamado(Builder builder) {
+		super();
+		this.id = builder.id;
+		this.prioridade = builder.prioridade;
+		this.status = builder.status;
+		this.titulo = builder.titulo;
+		this.observacoes = builder.observacoes;
+		this.tecnico = builder.tecnico;
+		this.cliente = builder.cliente;
+	}
 
+	public static class Builder{
+		private Integer id;
+		private Prioridade prioridade;
+		private Status status;
+		private String titulo;
+		private String observacoes;
+		private Tecnico tecnico;
+		private Cliente cliente;
+		
+		public Builder() {}
+
+		public Builder setId(Integer id) {
+			this.id = id;
+			return this;
+		}
+
+		public Builder setPrioridade(Prioridade prioridade) {
+			this.prioridade = prioridade;
+			return this;
+		}
+
+		public Builder setStatus(Status status) {
+			this.status = status;
+			return this;
+		}
+
+		public Builder setTitulo(String titulo) {
+			this.titulo = titulo;
+			return this;
+		}
+
+		public Builder setObservacoes(String observacoes) {
+			this.observacoes = observacoes;
+			return this;
+		}
+
+		public Builder setTecnico(Tecnico tecnico) {
+			this.tecnico = tecnico;
+			return this;
+		}
+
+		public Builder setCliente(Cliente cliente) {
+			this.cliente = cliente;
+			return this;
+		}
+		
+		public Chamado build() {
+			return new Chamado(this);
+		}
+	}
+	
 	public Integer getId() {
 		return id;
 	}

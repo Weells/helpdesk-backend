@@ -36,6 +36,8 @@ public class Tecnico extends Pessoa {
 		private String email;
 		private String senha;
 		
+		public Builder() {}
+		
 		public Builder setId(Integer id) {
 			this.id = id;
 			return this;
