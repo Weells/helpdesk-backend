@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class StandardError implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Long timestamp;
-	private Integer status;
-	private String error;
-	private String message;
-	private String path;
+	protected Long timestamp;
+	protected Integer status;
+	protected String error;
+	protected String message;
+	protected String path;
 	
 	public StandardError() {
 		super();
@@ -50,6 +50,7 @@ public class StandardError implements Serializable {
 			this.path = path;
 			return this;
 		}
+		
 		public StandardError build() {
 			return new StandardError(this);
 		}
