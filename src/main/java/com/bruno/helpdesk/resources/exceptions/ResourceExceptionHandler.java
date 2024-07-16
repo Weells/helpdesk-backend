@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.bruno.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.bruno.helpdesk.services.exceptions.ObjectNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,5 +26,20 @@ public class ResourceExceptionHandler {
 				.build();
 		
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+	}
+	
+	@ExceptionHandler(DataIntegrityViolationException.class)
+	public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException ex,
+			HttpServletRequest request) {
+		
+		StandardError error = new StandardError.Builder()
+				.setTimestamp(System.currentTimeMillis())
+				.setStatus(HttpStatus.BAD_REQUEST.value())
+				.setError("Violação de dados")
+				.setMessage(ex.getMessage())
+				.setPath(request.getRequestURI())
+				.build();
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 }
