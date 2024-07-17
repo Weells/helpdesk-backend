@@ -33,7 +33,7 @@ public class DBService {
 		Tecnico tec1 = new Tecnico.Builder()
 				.setId(null)
 				.setNome("Paulo Gustavo")
-				.setCpf("11122233344")
+				.setCpf("56843416080")
 				.setEmail("paulo@gmail.com")
 				.setSenha("123")
 				.build();
@@ -42,7 +42,7 @@ public class DBService {
 		Cliente cli1 = new Cliente.Builder()
 				.setId(null)
 				.setNome("Linus Torvalds")
-				.setCpf("70511744013")
+				.setCpf("70214573087")
 				.setEmail("linus@gmail.com")
 				.setSenha("123")
 				.build();
