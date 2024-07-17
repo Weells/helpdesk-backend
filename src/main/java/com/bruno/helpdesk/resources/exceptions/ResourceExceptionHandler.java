@@ -11,6 +11,7 @@ import com.bruno.helpdesk.services.exceptions.DataIntegrityViolationException;
 import com.bruno.helpdesk.services.exceptions.ObjectNotFoundException;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -62,5 +63,20 @@ public class ResourceExceptionHandler {
 		}
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+	}
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<StandardError> validationError(ConstraintViolationException ex,
+			HttpServletRequest request) {
+		
+		StandardError error = new StandardError.Builder()
+				.setTimestamp(System.currentTimeMillis())
+				.setStatus(HttpStatus.BAD_REQUEST.value())
+				.setError("Violação de dados")
+				.setMessage("CPF inválido!")
+				.setPath(request.getRequestURI())
+				.build();
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 }
