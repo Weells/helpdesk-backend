@@ -1,5 +1,6 @@
 package com.bruno.helpdesk.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,6 +42,13 @@ public class ChamadoService {
 	public Chamado create(@Valid ChamadoDTO objDTO) {
 		return repository.save(newChamado(objDTO));
 	}
+
+	public Chamado update(Integer id, ChamadoDTO objDTO) {
+		objDTO.setId(id);
+		Chamado oldObj = findById(id);
+		oldObj = newChamado(objDTO);
+		return repository.save(oldObj);
+	}
 	
 	private Chamado newChamado(ChamadoDTO objDTO) {
 		Tecnico tecnico = tecnicoService.findById(objDTO.getTecnico());
@@ -58,6 +66,10 @@ public class ChamadoService {
 		if(objDTO.getId() != null) {
 			chamado.setId(objDTO.getId());
 		}
+		if(objDTO.getStatus().equals(2)) {
+			chamado.setDataFechamento(LocalDate.now());
+		}
 		return chamado;
 	}
+
 }
