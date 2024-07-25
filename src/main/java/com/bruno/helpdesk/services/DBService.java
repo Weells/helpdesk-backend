@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.bruno.helpdesk.domain.Chamado;
@@ -28,6 +29,9 @@ public class DBService {
 	@Autowired
 	private ChamadoRepository chamadoRepository;
 	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+	
 	@Bean
 	public void instanciaDB() {
 		Tecnico tec1 = new Tecnico.Builder()
@@ -35,7 +39,7 @@ public class DBService {
 				.setNome("Paulo Gustavo")
 				.setCpf("56843416080")
 				.setEmail("paulo@gmail.com")
-				.setSenha("123")
+				.setSenha(encoder.encode("123"))
 				.build();
 		tec1.addPerfil(Perfil.ADMIN);
 		
@@ -44,7 +48,7 @@ public class DBService {
 				.setNome("Linus Torvalds")
 				.setCpf("70214573087")
 				.setEmail("linus@gmail.com")
-				.setSenha("123")
+				.setSenha(encoder.encode("123"))
 				.build();
 		
 		Chamado c1 = new Chamado.Builder()
