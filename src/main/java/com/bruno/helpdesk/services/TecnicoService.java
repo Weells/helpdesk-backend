@@ -38,17 +38,21 @@ public class TecnicoService {
 		return repository.findAll();
 	}
 
-	public Tecnico create(TecnicoDTO obj) {
-		obj.setId(null);
-		obj.setSenha(encoder.encode(obj.getSenha()));
-		validaPorCpfEEmail(obj);
-		Tecnico newObj = new Tecnico(obj);
+	public Tecnico create(TecnicoDTO objDTO) {
+		objDTO.setId(null);
+		objDTO.setSenha(encoder.encode(objDTO.getSenha()));
+		validaPorCpfEEmail(objDTO);
+		Tecnico newObj = new Tecnico(objDTO);
 		return repository.save(newObj);
 	}
 
 	public Tecnico update(Integer id, @Valid TecnicoDTO objDTO) {
 		objDTO.setId(id);
 		Tecnico oldObj = findById(id);
+		
+		if(!objDTO.getSenha().equals(oldObj.getSenha())) 
+			objDTO.setSenha(encoder.encode(objDTO.getSenha()));
+		
 		validaPorCpfEEmail(objDTO);
 		oldObj = new Tecnico(objDTO);
 		return repository.save(oldObj);
